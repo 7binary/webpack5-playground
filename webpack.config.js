@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -42,7 +41,8 @@ module.exports = (env) => {
     // *** WEBPACK-DEV-SERVER ***
     devtool: isDev ? 'source-map' : false,
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+      contentBase: path.join(__dirname, 'src'),
+      watchContentBase: true,
       historyApiFallback: true,
       port: 4200,
       open: true,
@@ -58,7 +58,6 @@ module.exports = (env) => {
         minify: { collapseWhitespace: isProd },
       }),
       new ForkTsCheckerWebpackPlugin({ async: false }),
-      isDev && new webpack.HotModuleReplacementPlugin(),
       isDev && new ESLintPlugin({ extensions: ['js', 'jsx', 'ts', 'tsx'] }),
       isProd && new CleanPlugin(),
     ].filter(Boolean),
@@ -69,7 +68,7 @@ module.exports = (env) => {
           test: /\.(ts|js)x?$/i,
           exclude: /node_modules/,
           use: {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
               presets: [
                 '@babel/preset-env',

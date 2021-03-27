@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <h2 className="title">Webpack 5</h2>
+      <h2 className="title">Webpack 5!</h2>
       <hr/>
       <div className="logo"></div>
       {firstPost && <pre className="code">{firstPost!.toString()}</pre>}
